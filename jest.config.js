@@ -1,7 +1,7 @@
 export default {
     testEnvironment: 'node',
     collectCoverage: true,
-    coverageReporters: ['json', 'lcov', 'text', 'clover'],
+    coverageReporters: ['lcov', 'text'],
     coverageDirectory: 'coverage',
     "roots": [
       "<rootDir>/tests"

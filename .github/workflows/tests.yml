@@ -1,10 +1,6 @@
-name: CI
+name: test
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: ["push", "pull_request"]
 
 jobs:
   test:
@@ -14,13 +10,23 @@ jobs:
         node-version: [22]
 
     steps:
+    - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
       run: npm install
-      run: npm run test
+
+    - name: Run tests with coverage
+      run: npm run test:coverage
+
     - name: Upload coverage to Coveralls
+      uses: coverallsapp/github-action@v2
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: npx coveralls < coverage/lcov.info
+
